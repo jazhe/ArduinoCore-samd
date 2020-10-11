@@ -25,6 +25,7 @@
 
 
 #include "variant.h"
+#include "Arduino.h"
 
 /*
  * Pins descriptions
