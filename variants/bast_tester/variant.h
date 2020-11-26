@@ -16,30 +16,29 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#pragma once
+#ifndef _VARIANT_ARDUINO_ZERO_
+#define _VARIANT_ARDUINO_ZERO_
 
-/* This variant requires the MattairTech SAM D|L|C Core for Arduino >= 1.6.18-beta-b1.
+/* The definitions here need the MattairTech SAMD core >=1.6.8.
  * The format is different than the stock Arduino SAMD core,
  * which uses ARDUINO_SAMD_VARIANT_COMPLIANCE instead.
  */
+#define MATTAIRTECH_ARDUINO_SAMD_VARIANT_COMPLIANCE 10608
 
-#define MATTAIRTECH_ARDUINO_SAMD_VARIANT_COMPLIANCE 10618
-
-
-#include <WVariant.h>
-
-// General definitions
-/* ----------------------------------------------------------------------------
- *Clock Configuration
+/*----------------------------------------------------------------------------
+ *        Clock Configuration
  *----------------------------------------------------------------------------*/
 
-/** Master clock frequency (also Fcpu frequency) */
-#define VARIANT_MCK		(48000000ul)
+/* Master clock frequency (also Fcpu frequency). With the D51, this can be
+ * either 120000000ul or 48000000ul (selected in the menu). See README.md.
+ */
+#define VARIANT_MCK                       (F_CPU)
 
 /* If CLOCKCONFIG_HS_CRYSTAL is defined, then HS_CRYSTAL_FREQUENCY_HERTZ
  * must also be defined with the external crystal frequency in Hertz.
  */
-#define HS_CRYSTAL_FREQUENCY_HERTZ	16000000UL
+#define HS_CRYSTAL_FREQUENCY_HERTZ      16000000UL
+
 /* If the PLL is used (CLOCKCONFIG_32768HZ_CRYSTAL, or CLOCKCONFIG_HS_CRYSTAL
  * defined), then PLL_FRACTIONAL_ENABLED can be defined, which will result in
  * a more accurate 48MHz output frequency at the expense of increased jitter.
@@ -60,27 +59,44 @@
  */
 #define NVM_SW_CALIB_DFLL48M_FINE_VAL     (512)
 
-// Pins
-// ----
+/* Define CORTEX_M_CACHE_ENABLED to enable the Cortex M cache (D51 only).
+ */
+#define CORTEX_M_CACHE_ENABLED
+
+/*----------------------------------------------------------------------------
+ *        Headers
+ *----------------------------------------------------------------------------*/
+
+#include "WVariant.h"
+
+#ifdef __cplusplus
+#include "SERCOM.h"
+#include "Uart.h"
+#endif // __cplusplus
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif // __cplusplus
+
+/*----------------------------------------------------------------------------
+ *        Pins
+ *----------------------------------------------------------------------------*/
 
 // Number of pins defined in PinDescription array
-#define PINS_COUNT           (26u)
-#define NUM_DIGITAL_PINS     (24u)
+#define PINS_COUNT           (14u)
+#define NUM_DIGITAL_PINS     (12u)
 #define NUM_ANALOG_INPUTS    (2u)
 #define NUM_ANALOG_OUTPUTS   (0u)
 //#define analogInputToDigitalPin(p)  ((p < 3u) ? (p) + PIN_A0 : -1)
 
-
-// Low-level pin register query macros
-// -----------------------------------
-#define digitalPinToPort(P)      (&(PORT->Group[g_APinDescription[P].ulPort]))
-#define digitalPinToBitMask(P)   (1 << g_APinDescription[P].ulPin)
-//#define analogInPinToBit(P)    ()
-#define portOutputRegister(port) (&(port->OUT.reg))
-#define portInputRegister(port)  (&(port->IN.reg))
-#define portModeRegister(port)   (&(port->DIR.reg))
-#define digitalPinHasPWM(P)      (g_APinDescription[P].ulPWMChannel != NOT_ON_PWM || g_APinDescription[P].ulTCChannel != NOT_ON_TIMER)
-#define digitalPinToInterrupt(P) (g_APinDescription[P].ulExtInt)
+#define digitalPinToPort(P)        ( &(PORT->Group[g_APinDescription[P].ulPort]) )
+#define digitalPinToBitMask(P)     ( 1 << g_APinDescription[P].ulPin )
+//#define analogInPinToBit(P)        ( )
+#define portOutputRegister(port)   ( &(port->OUT.reg) )
+#define portInputRegister(port)    ( &(port->IN.reg) )
+#define portModeRegister(port)     ( &(port->DIR.reg) )
+#define digitalPinHasPWM(P)        ( g_APinDescription[P].ulPWMChannel != NOT_ON_PWM || g_APinDescription[P].ulTCChannel != NOT_ON_TIMER )
 
 /*
  * digitalPinToTimer(..) is AVR-specific and is not defined for SAMD
@@ -91,16 +107,13 @@
  */
 // #define digitalPinToTimer(P)
 
-
 // LEDs
-// ----
-#define PIN_LED_13           (16u)
+#define PIN_LED_13           (14u)
 #define PIN_LED              PIN_LED_13
 #define LED_BUILTIN          PIN_LED_13
 
-/*
- * Analog pins
- */
+/* Analog pins*/
+ 
 #define PIN_A0               (2ul)
 #define PIN_A1               (3ul)
 
@@ -113,14 +126,26 @@ static const uint8_t A1  = PIN_A1;
 #define VARIANT_AR_DEFAULT	AR_DEFAULT
 
 /*
+ * Serial interfaces
+ */
+
+// Serial1 (sercom 1)
+#define PIN_SERIAL1_RX       (1ul) // PA23
+#define PAD_SERIAL1_RX       (SERCOM_RX_PAD_1)
+#define PIN_SERIAL1_TX       (0ul) // PA22
+#define PAD_SERIAL1_TX       (UART_TX_PAD_0)
+
+#define SERCOM_INSTANCE_SERIAL1       &sercom3
+
+/*
  * SPI Interfaces
  */
-#define SPI_INTERFACES_COUNT 1
+#define SPI_INTERFACES_COUNT 1 //SPI on pins 10,11,12,13 
 
-#define PIN_SPI_MISO         (4u)  // PA04 SERCOM0 PAD[0] - 12u
-#define PIN_SPI_MOSI         (6u)  // PA06 SERCOM0 PAD[2] - 11u 
-#define PIN_SPI_SCK          (7u)  // PA07 SERCOM0 PAD[3] - 13u
-#define PIN_SPI_SS           (5u)  // PA05 SERCOM0 PAD[1] - 10u
+#define PIN_SPI_MISO         (6u)  // PA19 SERCOM0 PAD[0] - 6u
+#define PIN_SPI_MOSI         (5u)  // PA16 SERCOM0 PAD[2] - 5u 
+#define PIN_SPI_SCK          (7u)  // PA17 SERCOM0 PAD[3] - 7u
+#define PIN_SPI_SS           (4u)  // PA18 SERCOM0 PAD[1] - 4u
 #define PERIPH_SPI           sercom0
 #define PAD_SPI_TX           SPI_PAD_2_SCK_3
 #define PAD_SPI_RX           SERCOM_RX_PAD_0
@@ -130,56 +155,49 @@ static const uint8_t MOSI = PIN_SPI_MOSI ;
 static const uint8_t MISO = PIN_SPI_MISO ;
 static const uint8_t SCK  = PIN_SPI_SCK ;
 
+
 /*
  * Wire Interfaces
  */
 #define WIRE_INTERFACES_COUNT 1
 
-// "external" public i2c interface
-
-#define PIN_WIRE_SDA         (8u) //PA08
-#define PIN_WIRE_SCL         (9u) //PA09
+#define PIN_WIRE_SDA         (12u) //PA08
+#define PIN_WIRE_SCL         (13u) //PA09
 #define PERIPH_WIRE          sercom2
 #define WIRE_IT_HANDLER     SERCOM2_Handler
 
 static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
 
-// USB
-// ---
-//#define PIN_USB_HOST_ENABLE (25ul)
+/*
+ * USB
+ */
 #define PIN_USB_HOST_ENABLE_VALUE	0
-#define PIN_USB_DM          (20ul)
-#define PIN_USB_DP          (21ul)
+#define PIN_USB_DM          (8ul)
+#define PIN_USB_DP          (9ul)
 
-
-// I2S Interfaces
-// --------------
-#define I2S_INTERFACES_COUNT 0
-
-// Serial ports
-// ------------
 #ifdef __cplusplus
-#include "SERCOM.h"
-#include "Uart.h"
+}
+#endif
 
-// Instances of SERCOM
+/*----------------------------------------------------------------------------
+ *        Arduino objects - C++ only
+ *----------------------------------------------------------------------------*/
+
+#ifdef __cplusplus
+
+/*	=========================
+ *	===== SERCOM DEFINITION
+ *	=========================
+*/
 extern SERCOM sercom0;
 extern SERCOM sercom1;
 extern SERCOM sercom2;
 extern SERCOM sercom3;
-//extern SERCOM sercom4;
-//extern SERCOM sercom5;
 
-// Serial1
 extern Uart Serial1;
-#define PIN_SERIAL1_RX       (19ul) // PA23
-#define PAD_SERIAL1_RX       (SERCOM_RX_PAD_1)
-#define PIN_SERIAL1_TX       (18ul) // PA22
-#define PAD_SERIAL1_TX       (UART_TX_PAD_0)
-#endif // __cplusplus
 
-
+#endif
 
 // These serial port names are intended to allow libraries and architecture-neutral
 // sketches to automatically default to the correct port name for a particular type
@@ -196,10 +214,12 @@ extern Uart Serial1;
 //
 // SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.  Their RX & TX
 //                            pins are NOT connected to anything by default.
-#define SERIAL_PORT_USBVIRTUAL      SerialUSB
-#define SERIAL_PORT_MONITOR         SerialUSB
+#define SERIAL_PORT_USBVIRTUAL      Serial
+#define SERIAL_PORT_MONITOR         Serial
+// Serial has no physical pins broken out, so it's not listed as HARDWARE port
 #define SERIAL_PORT_HARDWARE        Serial1
 #define SERIAL_PORT_HARDWARE_OPEN   Serial1
+#define Serial SerialUSB
 
-// Alias Serial to SerialUSB
-#define Serial                      SerialUSB
+#endif /* _VARIANT_ARDUINO_ZERO_ */
+

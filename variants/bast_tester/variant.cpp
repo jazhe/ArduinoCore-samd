@@ -1,0 +1,90 @@
+/*
+  Copyright (c) 2014-2015 Arduino LLC.  All right reserved.
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
+
+#include "variant.h"
+
+/*
+ * Pins descriptions
+ */
+const PinDescription g_APinDescription[]=
+{
+  //UART
+  // 0 - SERCOM3 - PA22 - TX 
+  { PORTA, 22, PIO_SERCOM, (PER_ATTR_DRIVE_STD|PER_ATTR_SERCOM_STD), (PIN_ATTR_DIGITAL|PIN_ATTR_SERCOM|PIN_ATTR_EXTINT|PIN_ATTR_COM), NOT_ON_TIMER, No_ADC_Channel, EXTERNAL_INT_6, GCLK_CCL_NONE }, // RX: SERCOM0/PAD[3]
+  // 1 - SERCOM3 - PA23 - RX 
+  { PORTA, 23, PIO_SERCOM, (PER_ATTR_DRIVE_STD|PER_ATTR_SERCOM_STD), (PIN_ATTR_DIGITAL|PIN_ATTR_SERCOM|PIN_ATTR_EXTINT|PIN_ATTR_COM), NOT_ON_TIMER, No_ADC_Channel, EXTERNAL_INT_7, GCLK_CCL_NONE }, // TX: SERCOM0/PAD[2]
+
+  //ADC
+  // 2 - A0 - PA02 - GPIO
+  { PORTA,  2, PIO_MULTI, PER_ATTR_DRIVE_STD, (PIN_ATTR_ADC|PIN_ATTR_DIGITAL), NOT_ON_TIMER, ADC_Channel0, EXTERNAL_INT_2, GCLK_CCL_NONE }, // ADC/AIN[0]
+  // 3 - PA03 - A1
+  { PORTA,  3, PIO_MULTI, PER_ATTR_DRIVE_STD, (PIN_ATTR_ADC|PIN_ATTR_DIGITAL), NOT_ON_TIMER, ADC_Channel1, EXTERNAL_INT_3, GCLK_CCL_NONE }, // ADC/AIN[0]
+
+  
+  // SPI SERCOM0
+  // 4 - PA05 -  GPIO - PWM - SS(SPI) 
+  { PORTA,  5, PIO_SERCOM, (PER_ATTR_DRIVE_STD|PER_ATTR_TIMER_STD), (PIN_ATTR_DIGITAL|PIN_ATTR_TIMER|PER_ATTR_SERCOM_ALT), TCC0_CH1, No_ADC_Channel, EXTERNAL_INT_5, GCLK_CCL_NONE },  // TCC0/WO[1]
+  // 5 - PA06 -  GPIO - MOSI(SPI) 
+  { PORTA,  6, PIO_SERCOM, (PER_ATTR_DRIVE_STD|PER_ATTR_SERCOM_ALT), (PIN_ATTR_DIGITAL|PIN_ATTR_SERCOM), NOT_ON_TIMER, No_ADC_Channel, EXTERNAL_INT_NONE, GCLK_CCL_NONE },
+  // 6 - PA04 -  GPIO - MISO(SPI) 
+  { PORTA,  4, PIO_SERCOM, (PER_ATTR_DRIVE_STD|PER_ATTR_SERCOM_ALT), (PIN_ATTR_DIGITAL|PIN_ATTR_SERCOM), NOT_ON_TIMER, No_ADC_Channel, EXTERNAL_INT_NONE, GCLK_CCL_NONE },
+  // 7 - PA07 - GPIO - SCK(SPI) 
+  { PORTA,  7, PIO_SERCOM, (PER_ATTR_DRIVE_STD|PER_ATTR_TIMER_STD|PER_ATTR_SERCOM_ALT), (PIN_ATTR_DIGITAL|PIN_ATTR_TIMER|PIN_ATTR_SERCOM), TCC1_CH1, No_ADC_Channel, EXTERNAL_INT_7, GCLK_CCL_NONE }, // TCC1/WO[1]
+
+  
+  // USB
+  // 8 - PA24 -  USB_M 
+  { PORTA, 24, PIO_MULTI, PER_ATTR_DRIVE_STD, (PIN_ATTR_DIGITAL|PIN_ATTR_COM), NOT_ON_TIMER, No_ADC_Channel, EXTERNAL_INT_NONE, GCLK_CCL_NONE }, // USB/DM
+  // 9 - PA25 -  USB_P
+  { PORTA, 25, PIO_MULTI, PER_ATTR_DRIVE_STD, (PIN_ATTR_DIGITAL|PIN_ATTR_COM), NOT_ON_TIMER, No_ADC_Channel, EXTERNAL_INT_NONE, GCLK_CCL_NONE }, // USB/DP
+
+  
+  // SWCLK & SWDIO
+  // 10 - PA30 -  SWCLK
+  { PORTA, 30, PIO_MULTI, PER_ATTR_DRIVE_STD, PIN_ATTR_DIGITAL, NOT_ON_TIMER, No_ADC_Channel, EXTERNAL_INT_NONE, GCLK_CCL_NONE },
+  // 11 - PA31 -  SWDIO
+  { PORTA, 31, PIO_MULTI, PER_ATTR_DRIVE_STD, PIN_ATTR_DIGITAL, NOT_ON_TIMER, No_ADC_Channel, EXTERNAL_INT_NONE, GCLK_CCL_NONE },
+
+
+  // I2C
+  // 12 - A4 - PA08 - SDA -  GPIO - SERCOM2
+  { PORTA,  8, PIO_SERCOM, (PER_ATTR_DRIVE_STD|PER_ATTR_SERCOM_ALT), (PIN_ATTR_DIGITAL|PIN_ATTR_SERCOM), NOT_ON_TIMER, No_ADC_Channel, EXTERNAL_INT_NMI, GCLK_CCL_NONE },//
+  // 13 - A5 - PA09 - SCL -  GPIO - SERCOM2
+  { PORTA,  9, PIO_SERCOM, (PER_ATTR_DRIVE_STD|PER_ATTR_SERCOM_ALT), (PIN_ATTR_DIGITAL|PIN_ATTR_SERCOM), NOT_ON_TIMER, No_ADC_Channel, EXTERNAL_INT_9, GCLK_CCL_NONE }, //
+
+  
+  // 14 - LED - PA18 -  GPIO
+  { PORTA,  18, PIO_MULTI, PER_ATTR_DRIVE_STD, PIN_ATTR_DIGITAL, NOT_ON_TIMER, No_ADC_Channel, EXTERNAL_INT_11, GCLK_CCL_NONE }, // TCC0/WO[1]
+
+} ;
+
+const void* g_apTCInstances[TCC_INST_NUM+TC_INST_NUM]={ TCC0, TCC1, TCC2, TC3, TC4, TC5 } ;
+
+// Multi-serial objects instantiation
+SERCOM sercom0( SERCOM0 ) ;
+SERCOM sercom1( SERCOM1 ) ;
+SERCOM sercom2( SERCOM2 ) ;
+SERCOM sercom3( SERCOM3 ) ;
+
+Uart Serial1( &sercom1, PIN_SERIAL1_RX, PIN_SERIAL1_TX, PAD_SERIAL1_RX, PAD_SERIAL1_TX ) ;
+
+void SERCOM1_Handler()
+{
+  Serial1.IrqHandler();
+}
