@@ -85,7 +85,7 @@ extern "C"
 
 // Number of pins defined in PinDescription array
 #define PINS_COUNT           (14u)
-#define NUM_DIGITAL_PINS     (12u)
+#define NUM_DIGITAL_PINS     (14u)
 #define NUM_ANALOG_INPUTS    (2u)
 #define NUM_ANALOG_OUTPUTS   (0u)
 //#define analogInputToDigitalPin(p)  ((p < 3u) ? (p) + PIN_A0 : -1)
@@ -114,11 +114,12 @@ extern "C"
 
 /* Analog pins*/
  
-#define PIN_A0               (2ul)
-#define PIN_A1               (3ul)
+#define PIN_A0               (10ul)
+#define PIN_A1               (11ul)
 
 static const uint8_t A0  = PIN_A0;
 static const uint8_t A1  = PIN_A1;
+
 
 #define ADC_RESOLUTION		12
 
@@ -130,22 +131,20 @@ static const uint8_t A1  = PIN_A1;
  */
 
 // Serial1 (sercom 1)
-#define PIN_SERIAL1_RX       (1ul) // PA23
+#define PIN_SERIAL1_RX       (1ul) // PA01
 #define PAD_SERIAL1_RX       (SERCOM_RX_PAD_1)
-#define PIN_SERIAL1_TX       (0ul) // PA22
+#define PIN_SERIAL1_TX       (0ul) // PA00
 #define PAD_SERIAL1_TX       (UART_TX_PAD_0)
-
-#define SERCOM_INSTANCE_SERIAL1       &sercom3
 
 /*
  * SPI Interfaces
  */
 #define SPI_INTERFACES_COUNT 1 //SPI on pins 10,11,12,13 
 
-#define PIN_SPI_MISO         (6u)  // PA19 SERCOM0 PAD[0] - 6u
-#define PIN_SPI_MOSI         (5u)  // PA16 SERCOM0 PAD[2] - 5u 
-#define PIN_SPI_SCK          (7u)  // PA17 SERCOM0 PAD[3] - 7u
-#define PIN_SPI_SS           (4u)  // PA18 SERCOM0 PAD[1] - 4u
+#define PIN_SPI_MISO         (4u)  // PA04 CIPO SERCOM3 PAD[0] - 4u
+#define PIN_SPI_MOSI         (3u)  // PA06 COPI SERCOM3 PAD[2] - 3u 
+#define PIN_SPI_SCK          (5u)  // PA07 SCK  SERCOM3 PAD[3] - 5u
+#define PIN_SPI_SS           (2u)  // PA05 CS   SERCOM3 PAD[1] - 2u
 #define PERIPH_SPI           sercom0
 #define PAD_SPI_TX           SPI_PAD_2_SCK_3
 #define PAD_SPI_RX           SERCOM_RX_PAD_0
@@ -173,8 +172,8 @@ static const uint8_t SCL = PIN_WIRE_SCL;
  * USB
  */
 #define PIN_USB_HOST_ENABLE_VALUE	0
-#define PIN_USB_DM          (8ul)
-#define PIN_USB_DP          (9ul)
+#define PIN_USB_DM          (6ul)
+#define PIN_USB_DP          (7ul)
 
 #ifdef __cplusplus
 }
