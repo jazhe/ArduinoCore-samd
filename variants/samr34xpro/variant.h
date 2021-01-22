@@ -190,6 +190,20 @@ static const uint8_t MOSI = PIN_SPI_MOSI ;
 static const uint8_t MISO = PIN_SPI_MISO ;
 static const uint8_t SCK  = PIN_SPI_SCK ;
 
+// SPI1 External
+#define PIN_SPI1_MISO         (14u)
+#define PIN_SPI1_MOSI         (15u)
+#define PIN_SPI1_SCK          (16u)
+#define PIN_SPI1_SS           (10u)
+#define PAD_SPI1_TX           SPI_PAD_0_SCK_3
+#define PAD_SPI1_RX           SERCOM_RX_PAD_1
+#define PERIPH_SPI1           sercom5
+
+static const uint8_t SS1   = PIN_SPI1_SS ;        // The SERCOM SS PAD is available on this pin but HW SS isn't used. Set here only for reference.
+static const uint8_t MOSI1 = PIN_SPI1_MOSI ;
+static const uint8_t MISO1 = PIN_SPI1_MISO ;
+static const uint8_t SCK1  = PIN_SPI1_SCK ;
+
 /*
  * Wire Interfaces
  */
