@@ -120,26 +120,6 @@ extern "C"
 #define PIN_LED2       (28u)
 #define PIN_LED3       (0u)
 
-/* Analog pins*/
-/* 
-#define PIN_A0               (18ul)
-#define PIN_A1               (19ul)
-#define PIN_A2               (20ul)
-#define PIN_A3               (21ul)
-#define PIN_A4               (22ul)
-#define PIN_A5               (23ul)
-#define PIN_DAC0             (18ul)
-
-static const uint8_t A0  = PIN_A0;
-static const uint8_t A1  = PIN_A1;
-static const uint8_t A2  = PIN_A2;
-static const uint8_t A3  = PIN_A3;
-static const uint8_t A4  = PIN_A4;
-static const uint8_t A5  = PIN_A5;
-static const uint8_t DAC0 = PIN_DAC0;
-
-#define ADC_RESOLUTION		12
-*/
 /* Set default analog voltage reference */
 #define VARIANT_AR_DEFAULT	AR_DEFAULT
 
@@ -152,8 +132,6 @@ static const uint8_t DAC0 = PIN_DAC0;
 #define PAD_SERIAL1_RX       (SERCOM_RX_PAD_1)
 #define PIN_SERIAL1_TX       (4ul) //
 #define PAD_SERIAL1_TX       (UART_TX_PAD_0)
-#define PIN_SERIAL1_CTS      (7u)  //
-#define PAD_SERIAL1_CTS      (SERCOM_CTS_PAD_3)
 
 /*
  * SPI Interfaces
@@ -165,31 +143,23 @@ static const uint8_t DAC0 = PIN_DAC0;
 #define PIN_SPI_SCK         (19u)  // PA19 SERCOM3 PAD[3]
 #define PIN_SPI_CIPO        (22u)  // PA22 SERCOM3 PAD[0]
 #define PERIPH_SPI          sercom3
+#define PAD_SPI_TX          SPI_PAD_2_SCK_3
+#define PAD_SPI_RX          SERCOM_RX_PAD_0
 
-
-static const uint8_t NSS	  = PIN_SPI_NSS ;	// 
-static const uint8_t COPI = PIN_SPI_COPI ;
-static const uint8_t CIPO = PIN_SPI_CIPO ;
+static const uint8_t NSS	= PIN_SPI_NSS ;	// 
+static const uint8_t COPI = PIN_SPI_COPI;
+static const uint8_t CIPO = PIN_SPI_CIPO;
 static const uint8_t SCK  = PIN_SPI_SCK ;
-
 
 /*
  * Wire Interfaces
  */
-#define WIRE_INTERFACES_COUNT 1
-
-#define PIN_WIRE_SDA         (22u) //PA08
-#define PIN_WIRE_SCL         (23u) //PA09
-#define PERIPH_WIRE          sercom2
-#define WIRE_IT_HANDLER     SERCOM2_Handler
-
-static const uint8_t SDA = PIN_WIRE_SDA;
-static const uint8_t SCL = PIN_WIRE_SCL;
+#define WIRE_INTERFACES_COUNT 0
 
 /*
  * USB
  */
-#define PIN_USB_HOST_ENABLE_VALUE	-1
+#define PIN_USB_HOST_ENABLE_VALUE	0
 #define PIN_USB_DM          (24ul)
 #define PIN_USB_DP          (25ul)
 
