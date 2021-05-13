@@ -139,16 +139,16 @@ extern "C"
 #define SPI_INTERFACES_COUNT 1 //SPI on pins 17,18,19,22
 
 #define PIN_SPI_NSS         (17u)  // PA17 SERCOM3 PAD[1]
-#define PIN_SPI_COPI        (18u)  // PA18 SERCOM3 PAD[2]
+#define PIN_SPI_MOSI        (18u)  // PA18 SERCOM3 PAD[2]
 #define PIN_SPI_SCK         (19u)  // PA19 SERCOM3 PAD[3]
-#define PIN_SPI_CIPO        (22u)  // PA22 SERCOM3 PAD[0]
+#define PIN_SPI_MISO        (22u)  // PA22 SERCOM3 PAD[0]
 #define PERIPH_SPI          sercom3
 #define PAD_SPI_TX          SPI_PAD_2_SCK_3
 #define PAD_SPI_RX          SERCOM_RX_PAD_0
 
 static const uint8_t NSS	= PIN_SPI_NSS ;	// 
-static const uint8_t COPI = PIN_SPI_COPI;
-static const uint8_t CIPO = PIN_SPI_CIPO;
+static const uint8_t MOSI = PIN_SPI_MOSI;
+static const uint8_t MISO = PIN_SPI_MISO;
 static const uint8_t SCK  = PIN_SPI_SCK ;
 
 /*
