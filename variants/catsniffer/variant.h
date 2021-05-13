@@ -23,7 +23,7 @@
  * The format is different than the stock Arduino SAMD core,
  * which uses ARDUINO_SAMD_VARIANT_COMPLIANCE instead.
  */
-#define MATTAIRTECH_ARDUINO_SAMD_VARIANT_COMPLIANCE 10608
+#define MATTAIRTECH_ARDUINO_SAMD_VARIANT_COMPLIANCE 10618
 
 /*----------------------------------------------------------------------------
  *        Clock Configuration
@@ -32,7 +32,8 @@
 /* Master clock frequency (also Fcpu frequency). With the D51, this can be
  * either 120000000ul or 48000000ul (selected in the menu). See README.md.
  */
-#define VARIANT_MCK                       (F_CPU)
+//#define VARIANT_MCK                       (F_CPU)
+#define VARIANT_MCK			  (48000000ul)
 
 /* If CLOCKCONFIG_HS_CRYSTAL is defined, then HS_CRYSTAL_FREQUENCY_HERTZ
  * must also be defined with the external crystal frequency in Hertz.
@@ -61,13 +62,14 @@
 
 /* Define CORTEX_M_CACHE_ENABLED to enable the Cortex M cache (D51 only).
  */
-#define CORTEX_M_CACHE_ENABLED
+//#define CORTEX_M_CACHE_ENABLED
 
 /*----------------------------------------------------------------------------
  *        Headers
  *----------------------------------------------------------------------------*/
 
 #include "WVariant.h"
+#include "sam.h"
 
 #ifdef __cplusplus
 #include "SERCOM.h"
@@ -84,11 +86,14 @@ extern "C"
  *----------------------------------------------------------------------------*/
 
 // Number of pins defined in PinDescription array
-#define PINS_COUNT           (24u)
-#define NUM_DIGITAL_PINS     (18u)
-#define NUM_ANALOG_INPUTS    (6u)
-#define NUM_ANALOG_OUTPUTS   (1u)
-#define analogInputToDigitalPin(p)  ((p < 3u) ? (p) + PIN_A0 : -1)
+#define NUM_PIN_DESCRIPTION_ENTRIES   (31u)
+//Number of pins defined in PinDescription array
+#define PINS_COUNT           NUM_PIN_DESCRIPTION_ENTRIES
+#define NUM_DIGITAL_PINS     PINS_COUNT
+#define NUM_ANALOG_INPUTS    (0u)
+#define NUM_ANALOG_OUTPUTS   (0u)
+
+#define analogInputToDigitalPin(p)  (p)
 
 #define digitalPinToPort(P)        ( &(PORT->Group[g_APinDescription[P].ulPort]) )
 #define digitalPinToBitMask(P)     ( 1 << g_APinDescription[P].ulPin )
@@ -96,7 +101,7 @@ extern "C"
 #define portOutputRegister(port)   ( &(port->OUT.reg) )
 #define portInputRegister(port)    ( &(port->IN.reg) )
 #define portModeRegister(port)     ( &(port->DIR.reg) )
-#define digitalPinHasPWM(P)        ( g_APinDescription[P].ulPWMChannel != NOT_ON_PWM || g_APinDescription[P].ulTCChannel != NOT_ON_TIMER )
+#define digitalPinHasPWM(P)        ( (g_APinDescription[P].ulPinAttribute & PIN_ATTR_TIMER_PWM) == PIN_ATTR_TIMER_PWM)
 
 /*
  * digitalPinToTimer(..) is AVR-specific and is not defined for SAMD
@@ -108,12 +113,15 @@ extern "C"
 // #define digitalPinToTimer(P)
 
 // LEDs
-#define PIN_LED_13           (24u)
-#define PIN_LED              PIN_LED_13
-#define LED_BUILTIN          PIN_LED_13
+#define PIN_LED_13     (27u)
+#define PIN_LED        PIN_LED_13
+#define LED_BUILTIN    PIN_LED_13
+
+#define PIN_LED2       (28u)
+#define PIN_LED3       (0u)
 
 /* Analog pins*/
- 
+/* 
 #define PIN_A0               (18ul)
 #define PIN_A1               (19ul)
 #define PIN_A2               (20ul)
@@ -131,7 +139,7 @@ static const uint8_t A5  = PIN_A5;
 static const uint8_t DAC0 = PIN_DAC0;
 
 #define ADC_RESOLUTION		12
-
+*/
 /* Set default analog voltage reference */
 #define VARIANT_AR_DEFAULT	AR_DEFAULT
 
@@ -140,29 +148,28 @@ static const uint8_t DAC0 = PIN_DAC0;
  */
 
 // Serial1 (sercom 0)
-#define PIN_SERIAL1_RX       (20ul) // PA05
+#define PIN_SERIAL1_RX       (5ul) //
 #define PAD_SERIAL1_RX       (SERCOM_RX_PAD_1)
-#define PIN_SERIAL1_TX       (19ul) // PA04
-#define PAD_SERIAL1_TX       (UART_TX_RTS_CTS_PAD_0_2_3)
-#define PIN_SERIAL1_RTS      (8u)  //PA06
-#define PIN_SERIAL1_CTS      (9u)  //PA07
+#define PIN_SERIAL1_TX       (4ul) //
+#define PAD_SERIAL1_TX       (UART_TX_PAD_0)
+#define PIN_SERIAL1_CTS      (7u)  //
+#define PAD_SERIAL1_CTS      (SERCOM_CTS_PAD_3)
 
 /*
  * SPI Interfaces
  */
-#define SPI_INTERFACES_COUNT 1 //SPI on pins 10,11,12,13 
+#define SPI_INTERFACES_COUNT 1 //SPI on pins 17,18,19,22
 
-#define PIN_SPI_MISO         (12u)  // PA19 SERCOM3 PAD[3] - 12u
-#define PIN_SPI_MOSI         (11u)  // PA16 SERCOM3 PAD[0] - 11u 
-#define PIN_SPI_SCK          (13u)  // PA17 SERCOM3 PAD[1] - 13u
-#define PIN_SPI_SS           (10u)  // PA18 SERCOM3 PAD[2] - 10u
-#define PERIPH_SPI           sercom3
-#define PAD_SPI_TX           SPI_PAD_0_SCK_1
-#define PAD_SPI_RX           SERCOM_RX_PAD_3
+#define PIN_SPI_NSS         (17u)  // PA17 SERCOM3 PAD[1]
+#define PIN_SPI_COPI        (18u)  // PA18 SERCOM3 PAD[2]
+#define PIN_SPI_SCK         (19u)  // PA19 SERCOM3 PAD[3]
+#define PIN_SPI_CIPO        (22u)  // PA22 SERCOM3 PAD[0]
+#define PERIPH_SPI          sercom3
 
-static const uint8_t SS	  = PIN_SPI_SS ;	// only pin remaining (shrug)
-static const uint8_t MOSI = PIN_SPI_MOSI ;
-static const uint8_t MISO = PIN_SPI_MISO ;
+
+static const uint8_t NSS	  = PIN_SPI_NSS ;	// 
+static const uint8_t COPI = PIN_SPI_COPI ;
+static const uint8_t CIPO = PIN_SPI_CIPO ;
 static const uint8_t SCK  = PIN_SPI_SCK ;
 
 
@@ -182,9 +189,9 @@ static const uint8_t SCL = PIN_WIRE_SCL;
 /*
  * USB
  */
-#define PIN_USB_HOST_ENABLE_VALUE	0
-#define PIN_USB_DM          (14ul)
-#define PIN_USB_DP          (15ul)
+#define PIN_USB_HOST_ENABLE_VALUE	-1
+#define PIN_USB_DM          (24ul)
+#define PIN_USB_DP          (25ul)
 
 #ifdef __cplusplus
 }
