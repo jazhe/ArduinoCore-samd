@@ -128,9 +128,9 @@ extern "C"
  */
 
 // Serial1 (sercom 0)
-#define PIN_SERIAL1_RX       (5ul) //
+#define PIN_SERIAL1_RX       (5ul) //PA05
 #define PAD_SERIAL1_RX       (SERCOM_RX_PAD_1)
-#define PIN_SERIAL1_TX       (4ul) //
+#define PIN_SERIAL1_TX       (4ul) //PA04
 #define PAD_SERIAL1_TX       (UART_TX_PAD_0)
 
 /*
