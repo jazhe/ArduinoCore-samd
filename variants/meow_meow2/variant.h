@@ -65,8 +65,8 @@
 
 // Number of pins defined in PinDescription array
 #define PINS_COUNT           (40u)
-#define NUM_DIGITAL_PINS     (36u)
-#define NUM_ANALOG_INPUTS    (4u)
+#define NUM_DIGITAL_PINS     (26u)
+#define NUM_ANALOG_INPUTS    (14u)
 #define NUM_ANALOG_OUTPUTS   (1u)
 
 // Low-level pin register query macros
@@ -91,13 +91,11 @@
 
 
 // LEDs
-// ----
-#define PIN_LED_23  (23u)
-#define LED_BUILTIN PIN_LED_23
+#define PIN_LED_23   (23u)
+#define PIN_LED      PIN_LED_23
+#define LED_BUILTIN  PIN_LED
 
-/*
- * Analog pins
- */
+// Analog pins
 #define PIN_Y0               (2ul)
 #define PIN_Y1               (3ul)
 #define PIN_Y2               (4ul)
@@ -167,18 +165,14 @@ static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
 
 // USB
-// ---
-//#define PIN_USB_HOST_ENABLE (25ul)
 #define PIN_USB_HOST_ENABLE_VALUE	0
 #define PIN_USB_DM          (24ul)
 #define PIN_USB_DP          (25ul)
 
 // I2S Interfaces
-// --------------
 #define I2S_INTERFACES_COUNT 0
 
 // Serial ports
-// ------------
 #ifdef __cplusplus
 #include "SERCOM.h"
 #include "Uart.h"
