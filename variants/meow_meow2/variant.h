@@ -16,7 +16,8 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#pragma once
+#ifndef _VARIANT_ARDUINO_ZERO_
+#define _VARIANT_ARDUINO_ZERO_
 
 /* This variant requires the MattairTech SAM D|L|C Core for Arduino >= 1.6.18-beta-b1.
  * The format is different than the stock Arduino SAMD core,
@@ -24,9 +25,6 @@
  */
 
 #define MATTAIRTECH_ARDUINO_SAMD_VARIANT_COMPLIANCE 10618
-
-
-#include <WVariant.h>
 
 // General definitions
 /* ----------------------------------------------------------------------------
@@ -60,14 +58,35 @@
  */
 #define NVM_SW_CALIB_DFLL48M_FINE_VAL     (512)
 
+/*----------------------------------------------------------------------------
+ *        Headers
+ *----------------------------------------------------------------------------*/
+
+#include "WVariant.h"
+#include "sam.h"
+
+#ifdef __cplusplus
+#include "SERCOM.h"
+#include "Uart.h"
+
+#endif // __cplusplus
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif // __cplusplus
+
 // Pins
 // ----
-
 // Number of pins defined in PinDescription array
-#define PINS_COUNT           (40u)
-#define NUM_DIGITAL_PINS     (26u)
+#define NUM_PIN_DESCRIPTION_ENTRIES   (38u)
+// Number of pins defined in PinDescription array
+#define PINS_COUNT           NUM_PIN_DESCRIPTION_ENTRIES
+#define NUM_DIGITAL_PINS     PINS_COUNT
 #define NUM_ANALOG_INPUTS    (14u)
 #define NUM_ANALOG_OUTPUTS   (1u)
+
+//#define analogInputToDigitalPin(p)  (p)
 
 // Low-level pin register query macros
 // -----------------------------------
@@ -89,66 +108,75 @@
  */
 // #define digitalPinToTimer(P)
 
-
 // LEDs
-#define PIN_LED_23   (23u)
-#define PIN_LED      PIN_LED_23
+#define PIN_LED_13   (27u)
+#define PIN_LED      PIN_LED_13
 #define LED_BUILTIN  PIN_LED
 
+/* Set default analog voltage reference */
+#define VARIANT_AR_DEFAULT	AR_DEFAULT
+
 // Analog pins
-#define PIN_Y0               (2ul)
-#define PIN_Y1               (3ul)
-#define PIN_Y2               (4ul)
-#define PIN_Y3               (5ul)
-#define PIN_Y4               (6ul)
-#define PIN_Y5               (7ul)
-#define PIN_A3               (8ul)
-#define PIN_A2               (9ul)
+#define PIN_A0              (14ul)
 #define PIN_A1              (10ul)
-#define PIN_A0              (11ul)
-#define PIN_Y8              (32ul)
-#define PIN_Y9              (33ul)
-#define PIN_Y14             (34ul)
-#define PIN_Y15             (35ul)
+#define PIN_A2               (9ul)
+#define PIN_A3               (8ul)
+#define PIN_A4               (2ul)
+#define PIN_A5               (3ul)
+#define PIN_A6               (4ul)
+#define PIN_A7               (7ul)
+#define PIN_A8               (8ul)
+#define PIN_A9               (10ul)
+#define PIN_A10              (35ul)
+#define PIN_A11              (36ul)
+#define PIN_A12             (37ul)
+#define PIN_A13             (38ul)
 
-#define PIN_DAC0            (PIN_Y1)
+#define PIN_DAC0            (PIN_A4)
 
-static const uint8_t Y0  = PIN_Y0;
-static const uint8_t Y1  = PIN_Y1;
-static const uint8_t Y2  = PIN_Y2;
-static const uint8_t Y3  = PIN_Y3;
-static const uint8_t Y4  = PIN_Y4;
-static const uint8_t Y5  = PIN_Y5;
-static const uint8_t A3  = PIN_A3;
-static const uint8_t A2  = PIN_A2;
-static const uint8_t A1  = PIN_A1;
 static const uint8_t A0  = PIN_A0;
-static const uint8_t Y8  = PIN_Y8;
-static const uint8_t Y9  = PIN_Y9;
-static const uint8_t Y14  = PIN_Y14;
-static const uint8_t Y15  = PIN_Y15;
+static const uint8_t A1  = PIN_A1;
+static const uint8_t A2  = PIN_A2;
+static const uint8_t A3  = PIN_A3;
+static const uint8_t A4  = PIN_A4;
+static const uint8_t A5  = PIN_A5;
+static const uint8_t A6  = PIN_A6;
+static const uint8_t A7  = PIN_A7;
+static const uint8_t A8  = PIN_A8;
+static const uint8_t A9  = PIN_A9;
+static const uint8_t A10  = PIN_A10;
+static const uint8_t A11  = PIN_A11;
+static const uint8_t A12  = PIN_A12;
+static const uint8_t A13  = PIN_A13;
 
 static const uint8_t DAC0 = PIN_DAC0;
 
 #define ADC_RESOLUTION		12
 
-/* Set default analog voltage reference */
-#define VARIANT_AR_DEFAULT	AR_DEFAULT
+/*
+ * Serial interfaces
+ */
+#define PIN_SERIAL1_RX       (19ul)
+#define PIN_SERIAL1_TX       (18ul)
+#define PAD_SERIAL1_TX       (UART_TX_PAD_0)
+#define PAD_SERIAL1_RX       (SERCOM_RX_PAD_1)
 
 /*
  * SPI Interfaces
  */
 #define SPI_INTERFACES_COUNT 1
 
-#define PIN_SPI_MISO         (22u)
-#define PIN_SPI_SCK          (19u)
-#define PIN_SPI_MOSI         (18u)
+#define PIN_SPI_NSS          (5u)
+#define PIN_SPI_MISO         (26u)
+#define PIN_SPI_SCK          (25u)
+#define PIN_SPI_MOSI         (24u)
 #define PERIPH_SPI           sercom3
-#define PAD_SPI_TX           SPI_PAD_0_SCK_2  // MOSI / SCK
-#define PAD_SPI_RX           SERCOM_RX_PAD_1  // MISO
+#define PAD_SPI_TX           SPI_PAD_2_SCK_3  // MOSI / SCK
+#define PAD_SPI_RX           SERCOM_RX_PAD_0  // MISO
 
-static const uint8_t MOSI = PIN_SPI_MOSI ;
-static const uint8_t MISO = PIN_SPI_MISO ;
+static const uint8_t NSS	= PIN_SPI_NSS ;	// 
+static const uint8_t MOSI = PIN_SPI_MOSI;
+static const uint8_t MISO = PIN_SPI_MISO;
 static const uint8_t SCK  = PIN_SPI_SCK ;
 
 /*
@@ -161,21 +189,21 @@ static const uint8_t SCK  = PIN_SPI_SCK ;
 #define PIN_WIRE_SCL         (1u)
 #define PERIPH_WIRE          sercom1
 #define WIRE_IT_HANDLER      SERCOM1_Handler
+
 static const uint8_t SDA = PIN_WIRE_SDA;
 static const uint8_t SCL = PIN_WIRE_SCL;
 
 // USB
-#define PIN_USB_HOST_ENABLE_VALUE	0
-#define PIN_USB_DM          (24ul)
-#define PIN_USB_DP          (25ul)
+#define PIN_USB_HOST_ENABLE_VALUE	-1
+#define PIN_USB_DM          (28ul)
+#define PIN_USB_DP          (29ul)
 
-// I2S Interfaces
-#define I2S_INTERFACES_COUNT 0
+#ifdef __cplusplus
+}
+#endif
 
 // Serial ports
 #ifdef __cplusplus
-#include "SERCOM.h"
-#include "Uart.h"
 
 // Instances of SERCOM
 extern SERCOM sercom0;
@@ -187,13 +215,8 @@ extern SERCOM sercom5;
 
 // Serial1
 extern Uart Serial1;
-#define PIN_SERIAL1_RX       (13ul)
-#define PIN_SERIAL1_TX       (12ul)
-#define PAD_SERIAL1_TX       (UART_TX_PAD_0)
-#define PAD_SERIAL1_RX       (SERCOM_RX_PAD_1)
+
 #endif // __cplusplus
-
-
 
 // These serial port names are intended to allow libraries and architecture-neutral
 // sketches to automatically default to the correct port name for a particular type
@@ -210,10 +233,12 @@ extern Uart Serial1;
 //
 // SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.  Their RX & TX
 //                            pins are NOT connected to anything by default.
-#define SERIAL_PORT_USBVIRTUAL      SerialUSB
-#define SERIAL_PORT_MONITOR         SerialUSB
+#define SERIAL_PORT_USBVIRTUAL      Serial
+#define SERIAL_PORT_MONITOR         Serial
 #define SERIAL_PORT_HARDWARE        Serial1
 #define SERIAL_PORT_HARDWARE_OPEN   Serial1
 
 // Alias Serial to SerialUSB
 #define Serial                      SerialUSB
+
+#endif /* _VARIANT_ARDUINO_ZERO_ */
