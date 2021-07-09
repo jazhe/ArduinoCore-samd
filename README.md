@@ -24,9 +24,9 @@ on GitHub, which will be used to maintain Arduino support for Electronic Cats bo
 * Supports the bootloaders UF2. Available at [bootloaders UF2 SAMD21 repository](https://github.com/ElectronicCats/uf2-samd21).
 * USB CDC Bootloader with optional SDCard support. See [bootloaders/zero/README.md](https://github.com/ElectronicCats/ArduinoCore-samd/tree/master/bootloaders/zero/README.md).
 
-## Installation Instruction "Electronic Cats" support
+## Installation Instructions "Electronic Cats" support
 
-**Instruction Details**
+**Instructions Details**
 
 More details about Installation Instruction visit our [Wiki](https://github.com/ElectronicCats/ArduinoCore-samd/wiki/Installation-Instruction)
 
@@ -101,7 +101,7 @@ support for four clock sources, and firmware loading from a MicroSD card.
 
 ### Bootloader Firmware Installation
 
-[Instruction for Bootloader Firmware Installation](https://github.com/ElectronicCats/ArduinoCore-samd/wiki/Bootloader-Firmware-Installation)
+[Instructions for Bootloader Firmware Installation](https://github.com/ElectronicCats/ArduinoCore-samd/wiki/Bootloader-Firmware-Installation)
 
 ### Bootloader Binaries
 
