@@ -24,11 +24,13 @@ on GitHub, which will be used to maintain Arduino support for Electronic Cats bo
 * Supports the bootloaders UF2. Available at [bootloaders UF2 SAMD21 repository](https://github.com/ElectronicCats/uf2-samd21).
 * USB CDC Bootloader with optional SDCard support. See [bootloaders/zero/README.md](https://github.com/ElectronicCats/ArduinoCore-samd/tree/master/bootloaders/zero/README.md).
 
-## Installation Instruction
+## Installation Instruction "Electronic Cats" support
 
-More details visit our [Wiki](https://github.com/ElectronicCats/ArduinoCore-samd/wiki/Installation-Instruction)
+**Instruction Details**
 
-**Install "Electronic Cats" support**
+More details about Installation Instruction visit our [Wiki](https://github.com/ElectronicCats/ArduinoCore-samd/wiki/Installation-Instruction)
+
+**Simple Install**
 
 To add board support for our products, start Arduino and open the Preferences window (**File** > **Preferences**). Now copy and paste the following URL into the 'Additional Boards Manager URLs' input field:
 
