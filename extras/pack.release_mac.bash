@@ -32,11 +32,9 @@ FILENAME=electroniccats-samd-$VERSION.tar.bz2
 rm -rf $FILENAME
 cd ..
 cp -R $FOLDERNAME samd
-pwd
 gtar --exclude-vcs --exclude extras --exclude realese -jcvf $FILENAME samd 
 rm -rf samd
 cd -
-pwd
 mv ../$FILENAME realese/$FILENAME
 
 CHKSUM=`shasum -a 256 realese/$FILENAME | awk '{ print $1 }'`

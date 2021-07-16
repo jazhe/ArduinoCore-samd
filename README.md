@@ -9,7 +9,7 @@
 The Electronic Cats SAM D|L|C Core for Arduino is a fork from MattairTech/ArduinoCore-samd
 on GitHub, which will be used to maintain Arduino support for Electronic Cats boards.
 
-#### Microcontroller supported
+### Microcontroller supported
 
 - SAMD21
 - SAML21
@@ -18,72 +18,24 @@ on GitHub, which will be used to maintain Arduino support for Electronic Cats bo
 - SAMR34 or RAK4260
 - SAMD51
 
-#### SAMD (ARM Cortex-M0+) Boards by Electronic Cats
-
-* [Meow Meow](https://electroniccats.com/producto/meowmeow/)
-
-* [CatWAN USB-Stick](https://electroniccats.com/producto/catwan_usb-stick/)
-
-* [CatWAN Relay](https://electroniccats.com/producto/catwan-relay-board/)
-
-* [CatWAN Citizen](https://electroniccats.com)
-
-* [Bast Pro Mini M0](https://electroniccats.com)
-
+### SAMD (ARM Cortex-M0+) Boards by Electronic Cats
+* Supports all board by Electronic Cats
 * Supports four clock sources (two crystals, internal oscillator, and USB calibrated).
 * Supports the bootloaders UF2. Available at [bootloaders UF2 SAMD21 repository](https://github.com/ElectronicCats/uf2-samd21).
 * USB CDC Bootloader with optional SDCard support. See [bootloaders/zero/README.md](https://github.com/ElectronicCats/ArduinoCore-samd/tree/master/bootloaders/zero/README.md).
 
-**Installation Instruction**
+## Installation Instructions "Electronic Cats" support
 
-By itself SAMD21 isn´t powerful, the suport with Arduino´s IDE is the special thing with. With only a clics pair, copies and pastes, you can add support for ARM cortex- M0+to your Arduino IDE... 
+**Instructions Details**
 
-**Install SAMD support**
+More details about Installation Instruction visit our [Wiki](https://github.com/ElectronicCats/ArduinoCore-samd/wiki/Installation-Instruction)
 
-You must install the boards SAMD of Arduino(vertions 1.6.11 o later) 
-
-In the menú bar select tools --> boards --> Board Manager --> Arduino SAMD Boards 32 bit M0.
-
-In the search bar write  "SAMD" en then you can see the boards, do clic in install and wait to finish to install.
-
-![](https://cdn-learn.adafruit.com/assets/assets/000/028/792/original/adafruit_products_arduinosamd162.png)
-
-**Install "Electronic Cats" support**
+**Simple Install**
 
 To add board support for our products, start Arduino and open the Preferences window (**File** > **Preferences**). Now copy and paste the following URL into the 'Additional Boards Manager URLs' input field:
 
 	https://electroniccats.github.io/Arduino_Boards_Index/package_electroniccats_index.json
 
-
-- If there is already an URL from another manufacturer in that field, click the button at the right end of the field. This will open an editing window allowing you to paste the above URL onto a new line.
-
-- Press the "OK" button.
-- Open the "boards manager" that is in tools --> Board --> board manager.
-- Now write "Electronic Cats" (without quotes) in the search bar.
-- Click in install, jus wait to finish to install and only close the window. 
-
-![](https://github.com/ElectronicCats/MeowMeow/wiki/assets/Paso1_IDE.png)
-
-- In tools --> Boards, scroll to down in the board´s list you can see the Electronic Cat´s boards.
-
-![](https://github.com/ElectronicCats/MeowMeow/wiki/assets/Paso2_IDE.png)
-
-
-*This core is intended to be installed using Boards Manager (see below). To update from a*
-*previous version, click on Electronic Cats SAM D|L|C Boards in Boards Manager, then click Update.*
-
-## What's New - Beta Version (2.0.00-beta)
-
-**2.0.0-beta-b1 (Jul 14, 2020):**
-
-* Added support for SAMR34
-* Added support for Electronic Cats Boards
-* Remove Mattairtech Boards
-* Update with Arduino Core official fix
-* Remove menu for SPI, Serial and I2C interfaces
-* Thanks Mattairtech!
-
-[Variant Compliance Changelog](https://github.com/ElectronicCats/ArduinoCore-samd/blob/master/VARIANT_COMPLIANCE_CHANGELOG)
 
 ## Differences Between Electronic Cats and Arduino Cores
 
@@ -101,6 +53,14 @@ To add board support for our products, start Arduino and open the Preferences wi
   So, the startup code calls pinMode(31, INPUT).
 * Todo: Table summarizing which core files are modified and by how much
 * Todo: List changes due to adding/changing features vs porting to new chip
+* Added support for SAMR34
+* Added support for Electronic Cats Boards
+* Remove Mattairtech Boards
+* Update with Arduino Core official fix
+* Remove menu for SPI, Serial and I2C interfaces
+* Thanks Mattairtech!
+
+[Variant Compliance Changelog](https://github.com/ElectronicCats/ArduinoCore-samd/blob/master/VARIANT_COMPLIANCE_CHANGELOG)
 
 ### API Core
 
@@ -113,7 +73,7 @@ To add board support for our products, start Arduino and open the Preferences wi
 * Four different clock sources (two external crystals and two internal oscillator options)
 * Arduino IDE auto-reset and double-tap reset button support
 * Arduino extended commands for faster firmware loading
-* Supports the SAM D51, D21, L21, C21, and D11.
+* Supports the SAM D51, D21, L21, C21, R34 and D11.
 * Bossac command line utility for Windows, Linux, and OS X
 
 The bootloader can be started by:
@@ -141,26 +101,7 @@ support for four clock sources, and firmware loading from a MicroSD card.
 
 ### Bootloader Firmware Installation
 
-*If you are installing the bootloader because you think you deleted/corrupted it by uploading a bad sketch in Arduino,*
-*check first by entering the bootloader manually (double-press reset) as it is probably just a broken sketch.*
-
-#### Bootloader Installation Using the Arduino IDE
-
-1. If you do not already have the Electronic Cats SAM D|L|C Core installed, see SAM D|L|C Core Installation above.
-2. Plug in the board. The bootloader must be running to (press reset twice within 500ms).
-3. Plug an Atmel ICE into USB, then connect it to the powered board. A green LED should light on the Atmel ICE.
-4. Click Tools->Programmer->Atmel ICE.
-5. Click Tools->Board->Electronic Cats Board (or whichever board you are using).
-6. Click Tools->Microcontroller and select your MCU (if menu present).
-7. Click Tools->Burn Bootloader. Ignore any messages about not supporting shutdown or reset.
-8. Continue with driver installation above.
-
-A running sketch *may* interfere with the bootloader installation process. Be sure you are running the existing bootloader or using a blank chip.
-
-#### Bootloader Installation Using Another Tool
-
-**See [bootloaders/zero/README.md](https://github.com/ElectronicCats/uf2-samd21/blob/master/README.md) for information.**
-
+[Instructions for Bootloader Firmware Installation](https://github.com/ElectronicCats/ArduinoCore-samd/wiki/Bootloader-Firmware-Installation)
 
 ### Bootloader Binaries
 
@@ -184,7 +125,7 @@ based in developed by Justin Mattair of MattairTech LLC.
 ```
   Copyright (c) 2015 Arduino LLC.  All right reserved.
   Copyright (c) 2017-2018 MattairTech LLC. All right reserved.
-   Copyright (c) 2018-2020 Electronic Cats SAPI de CV. All right reserved.
+  Copyright (c) 2018-2021 Electronic Cats SAPI de CV. All right reserved.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
