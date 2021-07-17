@@ -154,12 +154,7 @@ static const uint8_t SCK  = PIN_SPI_SCK ;
 /*
  * Wire Interfaces
  */
-#define WIRE_INTERFACES_COUNT 1
-
-#define PIN_WIRE_SDA         -1
-#define PIN_WIRE_SCL         -1
-#define PERIPH_WIRE          sercom2
-//#define WIRE_IT_HANDLER    // hack! we call the i2c handler from within the serial handler!
+#define WIRE_INTERFACES_COUNT 0
 
 /*
  * USB
