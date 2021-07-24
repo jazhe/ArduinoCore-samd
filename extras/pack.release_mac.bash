@@ -32,16 +32,16 @@ FILENAME=electroniccats-samd-$VERSION.tar.bz2
 rm -rf $FILENAME
 cd ..
 cp -R $FOLDERNAME samd
-gtar --exclude-vcs --exclude extras --exclude realese -jcvf $FILENAME samd 
+gtar --exclude-vcs --exclude extras --exclude release -jcvf $FILENAME samd 
 rm -rf samd
 cd -
-mv ../$FILENAME realese/$FILENAME
+mv ../$FILENAME release/$FILENAME
 
-CHKSUM=`shasum -a 256 realese/$FILENAME | awk '{ print $1 }'`
-SIZE=`wc -c realese/$FILENAME | awk '{ print $1 }'`
+CHKSUM=`shasum -a 256 release/$FILENAME | awk '{ print $1 }'`
+SIZE=`wc -c release/$FILENAME | awk '{ print $1 }'`
 
 cat extras/package_index.json.Release.template |
 sed "s/%%VERSION%%/${VERSION}/" |
 sed "s/%%FILENAME%%/${FILENAME}/" |
 sed "s/%%CHECKSUM%%/${CHKSUM}/" |
-sed "s/%%SIZE%%/${SIZE}/" > realese/package_electroniccats-samd-${VERSION}_index.json
+sed "s/%%SIZE%%/${SIZE}/" > release/package_electroniccats-samd-${VERSION}_index.json
