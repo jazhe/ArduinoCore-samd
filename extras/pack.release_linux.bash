@@ -36,8 +36,8 @@ tar --exclude=extras/** --exclude=.git* --exclude realese/** -jcvf $FILENAME sam
 rm -rf samd
 cd -
 mkdir realese
-pwd
 mv ../$FILENAME realese/$FILENAME
+ls
 
 CHKSUM=`shasum -a 256 realese/$FILENAME | awk '{ print $1 }'`
 SIZE=`wc -c realese/$FILENAME | awk '{ print $1 }'`
