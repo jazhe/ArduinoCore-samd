@@ -35,6 +35,7 @@ cp -R $FOLDERNAME samd
 tar --exclude=extras/** --exclude=.git* --exclude realese/** -jcvf $FILENAME samd 
 rm -rf samd
 cd -
+mkdir realese
 mv ../$FILENAME realese/$FILENAME
 
 CHKSUM=`shasum -a 256 realese/$FILENAME | awk '{ print $1 }'`
