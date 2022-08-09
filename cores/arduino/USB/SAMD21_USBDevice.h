@@ -54,9 +54,10 @@ public:
 	inline void wakeupHost()     { usb.CTRLB.bit.UPRSM = 1; }
 
 	// USB QoS
+	#if SAMD21
 	inline void setDataSensitiveQoS() { usb.QOSCTRL.bit.DQOS = 2; }
 	inline void setConfigSensitiveQoS() { usb.QOSCTRL.bit.CQOS = 2; }
-
+	#endif
 	// USB speed
 	inline void setFullSpeed()       { usb.CTRLB.bit.SPDCONF = USB_DEVICE_CTRLB_SPDCONF_FS_Val;   }
 	inline void setLowSpeed()        { usb.CTRLB.bit.SPDCONF = USB_DEVICE_CTRLB_SPDCONF_LS_Val;   }

@@ -387,8 +387,10 @@ void USBDeviceClass::init()
 	usbd.reset();
 
 	usbd.calibrate();
+	#if SAMD21
 	usbd.setDataSensitiveQoS();
 	usbd.setConfigSensitiveQoS();
+	#endif
 	usbd.setUSBDeviceMode();
 	usbd.runInStandby();
 	usbd.setFullSpeed();

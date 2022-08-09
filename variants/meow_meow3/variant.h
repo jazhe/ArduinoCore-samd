@@ -79,7 +79,7 @@ extern "C"
 // Pins
 // ----
 // Number of pins defined in PinDescription array
-#define NUM_PIN_DESCRIPTION_ENTRIES   (38u)
+#define NUM_PIN_DESCRIPTION_ENTRIES   (47u)
 // Number of pins defined in PinDescription array
 #define PINS_COUNT           NUM_PIN_DESCRIPTION_ENTRIES
 #define NUM_DIGITAL_PINS     PINS_COUNT
@@ -109,7 +109,7 @@ extern "C"
 // #define digitalPinToTimer(P)
 
 // LEDs
-#define PIN_LED_13   (27u)
+#define PIN_LED_13   (23u)
 #define PIN_LED      PIN_LED_13
 #define LED_BUILTIN  PIN_LED
 
@@ -131,6 +131,17 @@ extern "C"
 #define PIN_A11              (36ul)
 #define PIN_A12             (37ul)
 #define PIN_A13             (38ul)
+
+#define PTC_Y0  (2ul)
+#define PTC_Y1  (3ul)
+#define PTC_Y2  (45ul)
+#define PTC_Y3  (46ul)
+#define PTC_Y4  (6ul)
+#define PTC_Y6  (8ul)
+#define PTC_Y7  (9ul)
+#define PTC_Y8  (10ul)
+#define PTC_Y9  (11ul)
+#define PTC_Y15 (44ul)
 
 #define PIN_DAC0            (PIN_A4)
 
@@ -195,8 +206,8 @@ static const uint8_t SCL = PIN_WIRE_SCL;
 
 // USB
 #define PIN_USB_HOST_ENABLE_VALUE	-1
-#define PIN_USB_DM          (28ul)
-#define PIN_USB_DP          (29ul)
+#define PIN_USB_DM          (24ul)
+#define PIN_USB_DP          (25ul)
 
 #ifdef __cplusplus
 }
