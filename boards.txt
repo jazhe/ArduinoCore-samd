@@ -952,7 +952,7 @@ electroniccats_catwan_tracker.menu.usb.none.build.pid=0xBAB9
 
 # NFC Copy Cat
 
-electroniccats_nfc_copy_cat.name=Electronic Cats NCF Copy Cat
+electroniccats_nfc_copy_cat.name=Electronic Cats NFC Copy Cat
 electroniccats_nfc_copy_cat.vid.0=0x1209
 electroniccats_nfc_copy_cat.pid.0=0xBAB8
 electroniccats_nfc_copy_cat.vid.1=0x1209
